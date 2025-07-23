@@ -2,32 +2,52 @@ import streamlit as st
 from PIL import Image
 import io
 
+import streamlit as st
+
 st.set_page_config(page_title="Analyse d’image par couleurs", layout="centered")
 
+# Logo depuis une URL (exemple : logo Paris-Saclay)
+logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-saclay-logo-012-scaled.jpg"
+
+with st.sidebar:
+    st.image(logo_url, width=120)  # Affiche le logo dans la sidebar
+
 st.title("🖼️ Analyse d’image par couleurs")
+
+st.write("Outil proposé par [Mathias Pisch](https://www.linkedin.com/in/mathiaspisch/)")
 
 # Upload de l'image
 uploaded_file = st.file_uploader("Glissez-déposez une image ici", type=["png", "jpg", "jpeg"])
 
 # Choix des couleurs
-st.markdown("### Paramètres des couleurs (à détecter)")
+st.markdown("### Couleurs à détecter")
 col1, col2 = st.columns(2)
 with col1:
+    st.badge("label", icon=None, color="blue", width="content")
     couleur_background = st.color_picker("Couleur du **background**", "#004DA9")
     couleur_naturelle_artificielle = st.color_picker("Couleur **naturelle artificielle**", "#90EE90")
 with col2:
     couleur_urbanisation = st.color_picker("Couleur **urbanisée**", "#FFFFFF")
     couleur_naturelle_existante = st.color_picker("Couleur **naturelle existante**", "#006400")
 
-# Couleurs des surlignages
-couleur_marqueur_urbanisation = (255, 0, 0)
-couleur_marqueur_naturelle_artificielle = (255, 165, 0)
-couleur_marqueur_naturelle_existante = (235, 246, 0)
+st.markdown("### Couleurs à utiliser pour annoter la carte")
+
+# Convertir RGB → hexadécimal (pour color_picker)
+def rgb_to_hex(rgb):
+    return '#%02x%02x%02x' % rgb
 
 # Conversion HEX → RGB
 def hex_to_rgb(hex_code):
     hex_code = hex_code.strip()
     return tuple(int(hex_code[i:i+2], 16) for i in (1, 3, 5))
+
+col1, col2 = st.columns(2)
+with col1:
+    couleur_marqueur_urbanisation = st.color_picker("Couleur des zones **urbanisées**", rgb_to_hex((255, 0, 0)))
+    couleur_marqueur_naturelle_artificielle = st.color_picker("Couleur des zones **naturelles artificelles**", rgb_to_hex((255, 165, 0)))
+
+with col2:
+    couleur_marqueur_naturelle_existante = st.color_picker("Couleur des zones **naturelles pré-existantes**", rgb_to_hex((235, 246, 0)))
 
 # === BOUTON D'ANALYSE ===
 if uploaded_file and st.button("🔍 Lancer l’analyse"):
