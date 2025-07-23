@@ -9,13 +9,13 @@ st.set_page_config(page_title="Analyse d'image - Plan de masse", layout="centere
 # Logo depuis une URL (exemple : logo Paris-Saclay)
 logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-saclay-logo-012-scaled.jpg"
 
-with st.sidebar:
-    st.image(logo_url, width=120)  # Affiche le logo dans la sidebar
+#with st.sidebar:
+#    st.image(logo_url, width=120)  # Affiche le logo dans la sidebar
 
 st.title("🖼️ Analyse d'image - Plan de masses")
 
 st.write("Outil proposé par [Mathias Pisch](https://www.linkedin.com/in/mathiaspisch/)")
-
+st.image(logo_url, width=120)
 # Upload de l'image
 uploaded_file = st.file_uploader("Glissez-déposez une image ici", type=["png", "jpg", "jpeg"])
 
@@ -29,9 +29,9 @@ with col1:
 with col2:
     couleur_urbanisation = st.color_picker("Couleur **urbanisée**", "#FFFFFF")
     couleur_naturelle_existante = st.color_picker("Couleur **naturelle existante**", "#006400")
+st.divider() 
 
 st.markdown("### Couleurs à utiliser pour annoter la carte")
-st.divider() 
 
 # Convertir RGB → hexadécimal (pour color_picker)
 def rgb_to_hex(rgb):
