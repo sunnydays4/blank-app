@@ -20,7 +20,7 @@ st.write("Outil proposé par [Mathias Pisch](https://www.linkedin.com/in/mathias
 uploaded_file = st.file_uploader("Glissez-déposez une image ici", type=["png", "jpg", "jpeg"])
 
 # Choix des couleurs
-st.markdown("### Couleurs à détecter")
+st.markdown("### Couleurs à détecter", divider="gray")
 col1, col2 = st.columns(2)
 with col1:
     st.badge("label", icon=None, color="blue", width="content")
