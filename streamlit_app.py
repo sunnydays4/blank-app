@@ -15,7 +15,7 @@ logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-sacl
 st.title("🖼️ Analyse d'image - Plan de masses")
 
 st.write("Outil proposé par [Mathias Pisch](https://www.linkedin.com/in/mathiaspisch/)")
-st.image(logo_url, width=120)
+st.image(logo_url, width=200)
 # Upload de l'image
 uploaded_file = st.file_uploader("Glissez-déposez une image ici", type=["png", "jpg", "jpeg"])
 
