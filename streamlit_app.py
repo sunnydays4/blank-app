@@ -115,8 +115,4 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
         st.markdown(f"""**Naturelle existante** :  
 - Pixels : `{surface_naturelle_existante}`  
 - Pourcentage (hors background) : `{(surface_naturelle_existante / total_analyse * 100):.2f} %`
-<<<<<<< HEAD
 """)
-=======
-""")
->>>>>>> 1b2b8a8 (Correction des bugs et amélioration de l'affichage)
