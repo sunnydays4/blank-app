@@ -4,7 +4,7 @@ import io
 
 import streamlit as st
 
-st.set_page_config(page_title="Analyse d’image par couleurs", layout="centered")
+st.set_page_config(page_title="Analyse d'image -Plan de masse", layout="centered")
 
 # Logo depuis une URL (exemple : logo Paris-Saclay)
 logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-saclay-logo-012-scaled.jpg"
