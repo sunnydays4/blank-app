@@ -4,7 +4,7 @@ import io
 
 import streamlit as st
 
-st.set_page_config(page_title="Analyse d'image - Plan de masse", layout="centered")
+st.set_page_config(page_title="Analyse numérique du lan de masse", layout="centered")
 
 # Logo depuis une URL (exemple : logo Paris-Saclay)
 logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-saclay-logo-012-scaled.jpg"
@@ -14,7 +14,7 @@ logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-sacl
 
 st.title("🖼️ Analyse d'image - Plan de masses")
 
-st.write("Outil proposé par [Mathias Pisch](https://www.linkedin.com/in/mathiaspisch/)")
+st.write("Outil réalisé par [Mathias Pisch](https://www.linkedin.com/in/mathiaspisch/)")
 st.image(logo_url, width=200)
 # Upload de l'image
 uploaded_file = st.file_uploader("Glissez-déposez une image ici", type=["png", "jpg", "jpeg"])
@@ -29,7 +29,11 @@ with col1:
 with col2:
     couleur_urbanisation = st.color_picker("Couleur **urbanisée**", "#FFFFFF")
     couleur_naturelle_existante = st.color_picker("Couleur **naturelle existante**", "#006400")
-st.divider() 
+seuil = st.slider("**Seuil de tolérance** à utiliser lors de la détection des couleurs", 0.0, 150.0, 10.0)
+#st.write("Vous avez réglé le seuil de tolérance à ", seuil)
+st.write("Une valeur typique est 10. Pour en savoir plus sur cette valeur, vous pouvez consulter la [documentation.](https://docs.google.com/presentation/d/e/2PACX-1vRxz5DE5uva9u3Uvqn1mU_ylCjGdndhxH_I_OZOBeHeFB6kRP1bo-b7rqyquY4hJ_0dxUsGc_hejEEd/pub?start=false&loop=false&delayms=3000)")
+
+#st.divider() 
 
 st.markdown("### Couleurs à utiliser pour annoter la carte")
 
@@ -65,7 +69,7 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
     image_annotée = image.copy()
     pixels_annotés = image_annotée.load()
 
-    def couleurs_proches(c1, c2, seuil=10):
+    def couleurs_proches(c1, c2): # ajouter seuil=10): si on veut qu'il soit fixé
         return all(abs(c1[i] - c2[i]) <= seuil for i in range(3))
 
     rgb_background = (*hex_to_rgb(couleur_background), 100)
