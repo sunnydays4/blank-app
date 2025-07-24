@@ -19,7 +19,7 @@ st.image(logo_url, width=200)
 # Upload de l'image
 uploaded_file = st.file_uploader("Glissez-déposez une image ici", type=["png", "jpg", "jpeg"])
 if uploaded_file :
-    st.image(uploaded_file, width=200)
+    st.image(uploaded_file, width=400)
 
 # Choix des couleurs
 st.markdown("### Couleurs à détecter")
