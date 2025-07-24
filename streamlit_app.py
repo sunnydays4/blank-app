@@ -31,7 +31,7 @@ with col1:
 with col2:
     couleur_urbanisation = st.color_picker("Couleur **urbanisée**", "#FFFFFF")
     couleur_naturelle_existante = st.color_picker("Couleur **naturelle existante**", "#006400")
-seuil = st.slider("**Seuil de tolérance** à utiliser lors de la détection des couleurs", 0.0, 150.0, 10.0)
+seuil = st.slider("**Seuil de tolérance** à utiliser lors de la détection des couleurs", 0, 150, 10)
 #st.write("Vous avez réglé le seuil de tolérance à ", seuil)
 st.write("Une valeur typique est 10. Pour en savoir plus sur cette valeur, vous pouvez consulter la [documentation.](https://docs.google.com/presentation/d/e/2PACX-1vRxz5DE5uva9u3Uvqn1mU_ylCjGdndhxH_I_OZOBeHeFB6kRP1bo-b7rqyquY4hJ_0dxUsGc_hejEEd/pub?start=false&loop=false&delayms=3000)")
 
