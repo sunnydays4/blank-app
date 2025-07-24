@@ -137,57 +137,89 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
 - Pourcentage (hors background) : `{(surface_naturelle_existante / total_analyse * 100):.2f} %`
 """)
         
+    if True == True :
+        # Génération du PDF comme dans ton code
+        if isinstance(image_annotée, np.ndarray):
+            image_annotée = Image.fromarray(image_annotée)
+        image_annotée = image_annotée.convert("RGB")
+        image_path_temp = "/tmp/image_annotee.jpg"
+        image_annotée.save(image_path_temp, "JPEG")
+
+        st.session_state["image_annotée"] = image_annotée
+        st.session_state["total_pixels"] = total_pixels
+        st.session_state["surface_background"] = surface_background
+        st.session_state["total_analyse"] = total_analyse
+        st.session_state["surface_urbanisation"] = surface_urbanisation
+        st.session_state["surface_naturelle_artificielle"] = surface_naturelle_artificielle
+        st.session_state["surface_naturelle_existante"] = surface_naturelle_existante
+
+
+if all(key in st.session_state for key in [
+    "image_annotée",
+    "total_pixels",
+    "surface_background",
+    "total_analyse",
+    "surface_urbanisation",
+    "surface_naturelle_artificielle",
+    "surface_naturelle_existante"
+]):
+
+    image_annotée = st.session_state["image_annotée"]
+    total_pixels = st.session_state["total_pixels"]
+    surface_background = st.session_state["surface_background"]
+    total_analyse = st.session_state["total_analyse"]
+    surface_urbanisation = st.session_state["surface_urbanisation"]
+    surface_naturelle_artificielle = st.session_state["surface_naturelle_artificielle"]
+    surface_naturelle_existante = st.session_state["surface_naturelle_existante"]
+    
+    # Convertir image en JPEG
     if isinstance(image_annotée, np.ndarray):
         image_annotée = Image.fromarray(image_annotée)
-        image_path_temp = "/tmp/image_annotee.jpg"
-        image_annotée = image_annotée.convert("RGB")
-        image_annotée.save(image_path_temp, "JPEG")
-        
-class PDF(FPDF):
-    def header(self):
-        self.set_font("Arial", "B", 12)
-        self.cell(0, 10, "Analyse du plan de masse", ln=True, align="C")
-        self.ln(5)
+    image_annotée = image_annotée.convert("RGB")
+    image_path_temp = "/tmp/image_annotee.jpg"
+    image_annotée.save(image_path_temp, "JPEG")
 
-    def footer(self):
-        self.set_y(-15)
-        self.set_font("Arial", "I", 8)
-        self.cell(0, 10, f"Page {self.page_no()}", align="C")
+    # Génération du PDF
+    class PDF(FPDF):
+        def header(self):
+            self.set_font("Arial", "B", 12)
+            self.cell(0, 10, "Analyse du plan de masse", ln=True, align="C")
+            self.ln(5)
 
-# Convertir l'image annotée en JPEG temporaire
+        def footer(self):
+            self.set_y(-15)
+            self.set_font("Arial", "I", 8)
+            self.cell(0, 10, f"Page {self.page_no()}", align="C")
 
-# Résultats formatés
-resultats = f"""
-Surface totale : {total_pixels} pixels
+    resultats = f"""
+    Surface totale : {total_pixels} pixels
 
-Background :
-- Pixels : {surface_background}
-- Pourcentage : {(surface_background / total_pixels * 100):.2f} %
+    Background :
+    - Pixels : {surface_background}
+    - Pourcentage : {(surface_background / total_pixels * 100):.2f} %
 
-Urbanisée :
-- Pixels : {surface_urbanisation}
-- Pourcentage (hors background) : {(surface_urbanisation / total_analyse * 100):.2f} %
+    Urbanisée :
+    - Pixels : {surface_urbanisation}
+    - Pourcentage (hors background) : {(surface_urbanisation / total_analyse * 100):.2f} %
 
-Naturelle artificielle :
-- Pixels : {surface_naturelle_artificielle}
-- Pourcentage (hors background) : {(surface_naturelle_artificielle / total_analyse * 100):.2f} %
+    Naturelle artificielle :
+    - Pixels : {surface_naturelle_artificielle}
+    - Pourcentage (hors background) : {(surface_naturelle_artificielle / total_analyse * 100):.2f} %
 
-Naturelle existante :
-- Pixels : {surface_naturelle_existante}
-- Pourcentage (hors background) : {(surface_naturelle_existante / total_analyse * 100):.2f} %
-"""
+    **Naturelle existante** :
+    - Pixels : {surface_naturelle_existante}
+    - Pourcentage (hors background) : {(surface_naturelle_existante / total_analyse * 100):.2f} %
+    """
 
-# Génération du PDF
-pdf = PDF()
-pdf.add_page()
-pdf.set_font("Arial", "", 12)
-pdf.multi_cell(0, 10, resultats)
-pdf.image(image_path_temp, x=10, y=pdf.get_y() + 5, w=180)
+    pdf = PDF()
+    pdf.add_page()
+    pdf.set_font("Arial", "", 12)
+    pdf.multi_cell(0, 10, resultats)
+    pdf.add_page()
+    pdf.image(image_path_temp, x=10, y=pdf.get_y() + 5, w=180)
 
-# Enregistrement du PDF
-pdf_output_path = "/tmp/resultats_analyse.pdf"
-pdf.output(pdf_output_path)
+    pdf_output_path = "/tmp/resultats_analyse.pdf"
+    pdf.output(pdf_output_path)
 
-# Bouton de téléchargement Streamlit
-with open(pdf_output_path, "rb") as f:
-    st.download_button("📄 Télécharger le rapport PDF", f, file_name="resultats_analyse.pdf", mime="application/pdf")
+    with open(pdf_output_path, "rb") as f:
+        st.download_button("📄 Télécharger le dernier rapport PDF", f, file_name="resultats_analyse.pdf", mime="application/pdf")
