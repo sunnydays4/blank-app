@@ -137,6 +137,12 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
 - Pourcentage (hors background) : `{(surface_naturelle_existante / total_analyse * 100):.2f} %`
 """)
         
+    if isinstance(image_annotée, np.ndarray):
+        image_annotée = Image.fromarray(image_annotée)
+        image_path_temp = "/tmp/image_annotee.jpg"
+        image_annotée = image_annotée.convert("RGB")
+        image_annotée.save(image_path_temp, "JPEG")
+        
 class PDF(FPDF):
     def header(self):
         self.set_font("Arial", "B", 12)
@@ -149,12 +155,6 @@ class PDF(FPDF):
         self.cell(0, 10, f"Page {self.page_no()}", align="C")
 
 # Convertir l'image annotée en JPEG temporaire
-
-if isinstance(image_annotée, np.ndarray):
-    image_annotée = Image.fromarray(image_annotée)
-    
-image_path_temp = "/tmp/image_annotee.jpg"
-image_annotée.save(image_path_temp, "JPEG")
 
 # Résultats formatés
 resultats = f"""
