@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 import io
 from fpdf import FPDF
+import numpy as np
 
 import streamlit as st
 
@@ -148,6 +149,10 @@ class PDF(FPDF):
         self.cell(0, 10, f"Page {self.page_no()}", align="C")
 
 # Convertir l'image annotée en JPEG temporaire
+
+if isinstance(image_annotée, np.ndarray):
+    image_annotée = Image.fromarray(image_annotée)
+    
 image_path_temp = "/tmp/image_annotee.jpg"
 image_annotée.save(image_path_temp, "JPEG")
 
