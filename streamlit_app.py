@@ -56,6 +56,10 @@ with col1:
 with col2:
     couleur_marqueur_naturelle_existante = st.color_picker("Couleur des zones **naturelles pré-existantes**", rgb_to_hex((235, 246, 0)))
 
+rgb_marqueur_urbanisation = hex_to_rgb(couleur_marqueur_urbanisation)
+rgb_marqueur_naturelle_artificielle = hex_to_rgb(couleur_marqueur_naturelle_artificielle)
+rgb_marqueur_naturelle_existante = hex_to_rgb(couleur_marqueur_naturelle_existante)
+
 # === BOUTON D'ANALYSE ===
 if uploaded_file and st.button("🔍 Lancer l’analyse"):
 
@@ -87,13 +91,13 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
                     surface_background += 1
                 elif couleurs_proches(couleur, rgb_naturelle_existante):
                     surface_naturelle_existante += 1
-                    pixels_annotés[j, i] = couleur_marqueur_naturelle_existante
+                    pixels_annotés[j, i] = rgb_marqueur_naturelle_existante
                 elif couleurs_proches(couleur, rgb_naturelle_artificielle):
                     surface_naturelle_artificielle += 1
-                    pixels_annotés[j, i] = couleur_marqueur_naturelle_artificielle
+                    pixels_annotés[j, i] = rgb_marqueur_naturelle_artificielle
                 elif couleurs_proches(couleur, rgb_urbanisation):
                     surface_urbanisation += 1
-                    pixels_annotés[j, i] = couleur_marqueur_urbanisation
+                    pixels_annotés[j, i] = rgb_marqueur_urbanisation
 
         st.success("✅ Analyse terminée !")
         st.image(image_annotée, caption="Image annotée", use_container_width =True)
