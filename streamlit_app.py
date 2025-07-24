@@ -61,7 +61,7 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
 
     image = Image.open(uploaded_file).convert("RGB")
     largeur, longueur = image.size
-    st.image(image, caption="Image originale", use_column_width=True)
+    st.image(image, caption="Image originale", use_container_width =True)
 
     surface_urbanisation = 0
     surface_naturelle_artificielle = 0
@@ -96,7 +96,7 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
                     pixels_annotés[j, i] = couleur_marqueur_urbanisation
 
         st.success("✅ Analyse terminée !")
-        st.image(image_annotée, caption="Image annotée", use_column_width=True)
+        st.image(image_annotée, caption="Image annotée", use_container_width =True)
 
         total_pixels = largeur * longueur
         total_analyse = total_pixels - surface_background
