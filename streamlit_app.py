@@ -34,7 +34,7 @@ if uploaded_file :
 st.markdown("### Couleurs à détecter")
 col1, col2 = st.columns(2)
 with col1:
-    st.badge("label", icon=None, color="blue", width="content")
+    #st.badge("label", icon=None, color="blue", width="content")
     couleur_background = st.color_picker("Couleur du **background**", "#004DA9")
     couleur_naturelle_artificielle = st.color_picker("Couleur **naturelle artificielle**", "#90EE90")
 with col2:
@@ -80,6 +80,7 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
     surface_naturelle_artificielle = 0
     surface_naturelle_existante = 0
     surface_background = 0
+    surface_non_classee = 0
 
     image_annotée = image.copy()
     pixels_annotés = image_annotée.load()
@@ -107,6 +108,8 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
                 elif couleurs_proches(couleur, rgb_urbanisation):
                     surface_urbanisation += 1
                     pixels_annotés[j, i] = rgb_marqueur_urbanisation
+                else :
+                    surface_non_classee += 1
 
         st.success("✅ Analyse terminée !")
         st.image(image_annotée, caption="Image annotée", use_container_width =True)
@@ -136,6 +139,11 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
 - Pixels : `{surface_naturelle_existante}`  
 - Pourcentage (hors background) : `{(surface_naturelle_existante / total_analyse * 100):.2f} %`
 """)
+
+        st.markdown(f"""**Surface non classée** :  
+- Pixels : `{surface_non_classee}`  
+- Pourcentage (hors background) : `{(surface_non_classee / total_analyse * 100):.2f} %`
+""")
         
     if True == True :
         # Génération du PDF comme dans ton code
@@ -152,6 +160,7 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
         st.session_state["surface_urbanisation"] = surface_urbanisation
         st.session_state["surface_naturelle_artificielle"] = surface_naturelle_artificielle
         st.session_state["surface_naturelle_existante"] = surface_naturelle_existante
+        st.session_state["surface_non_classee"] = surface_non_classee
 
 
 if all(key in st.session_state for key in [
@@ -161,7 +170,8 @@ if all(key in st.session_state for key in [
     "total_analyse",
     "surface_urbanisation",
     "surface_naturelle_artificielle",
-    "surface_naturelle_existante"
+    "surface_naturelle_existante",
+    "surface_non_classee"
 ]):
 
     image_annotée = st.session_state["image_annotée"]
@@ -171,7 +181,8 @@ if all(key in st.session_state for key in [
     surface_urbanisation = st.session_state["surface_urbanisation"]
     surface_naturelle_artificielle = st.session_state["surface_naturelle_artificielle"]
     surface_naturelle_existante = st.session_state["surface_naturelle_existante"]
-    
+    surface_non_classee = st.session_state["surface_non_classee"]
+
     # Convertir image en JPEG
     if isinstance(image_annotée, np.ndarray):
         image_annotée = Image.fromarray(image_annotée)
@@ -209,6 +220,10 @@ if all(key in st.session_state for key in [
     **Naturelle existante** :
     - Pixels : {surface_naturelle_existante}
     - Pourcentage (hors background) : {(surface_naturelle_existante / total_analyse * 100):.2f} %
+
+    **Non classée** :
+    - Pixels : {surface_non_classee}
+    - Pourcentage (hors background) : {(surface_non_classee / total_analyse * 100):.2f} %
     """
 
     pdf = PDF()
