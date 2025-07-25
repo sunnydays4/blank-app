@@ -23,6 +23,8 @@ logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-sacl
 
 st.title("🖼️ Analyse d'images - Plan de masse")
 
+st.write("Pour savoir ce que fait cet outil, et comment l'utiliser, vous pouvez consulter la [documentation.](https://docs.google.com/presentation/d/e/2PACX-1vRxz5DE5uva9u3Uvqn1mU_ylCjGdndhxH_I_OZOBeHeFB6kRP1bo-b7rqyquY4hJ_0dxUsGc_hejEEd/pub?start=false&loop=false&delayms=3000)")
+
 st.write("Outil réalisé par [Mathias Pisch](https://www.linkedin.com/in/mathiaspisch/)")
 st.image(logo_url, width=200)
 # Upload de l'image
