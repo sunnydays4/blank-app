@@ -150,8 +150,8 @@ if uploaded_file and st.button("🔍 Lancer l’analyse"):
         if isinstance(image_annotée, np.ndarray):
             image_annotée = Image.fromarray(image_annotée)
         image_annotée = image_annotée.convert("RGB")
-        image_path_temp = "/tmp/image_annotee.jpg"
-        image_annotée.save(image_path_temp, "JPEG")
+        image_annotee_path_temp = "/tmp/image_annotee.jpg"
+        image_annotée.save(image_annotee_path_temp, "JPEG")
 
         st.session_state["image_annotée"] = image_annotée
         st.session_state["total_pixels"] = total_pixels
@@ -187,8 +187,8 @@ if all(key in st.session_state for key in [
     if isinstance(image_annotée, np.ndarray):
         image_annotée = Image.fromarray(image_annotée)
     image_annotée = image_annotée.convert("RGB")
-    image_path_temp = "/tmp/image_annotee.jpg"
-    image_annotée.save(image_path_temp, "JPEG")
+    image_annotee_path_temp = "/tmp/image_annotee.jpg"
+    image_annotée.save(image_annotee_path_temp, "JPEG")
 
     # Génération du PDF
     class PDF(FPDF):
@@ -231,7 +231,7 @@ if all(key in st.session_state for key in [
     pdf.set_font("Arial", "", 12)
     pdf.multi_cell(0, 10, resultats)
     pdf.add_page()
-    pdf.image(image_path_temp, x=10, y=pdf.get_y() + 5, w=180)
+    pdf.image(image_annotee_path_temp, x=10, y=pdf.get_y() + 5, w=180)
 
     pdf_output_path = "/tmp/resultats_analyse.pdf"
     pdf.output(pdf_output_path)
