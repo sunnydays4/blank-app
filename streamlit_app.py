@@ -13,7 +13,7 @@ def get_image_download_link(img,filename,text):
     href =  f'<a href="data:file/txt;base64,{img_str}" download="{filename}">{text}</a>'
     return href
 
-st.set_page_config(page_title="Analyse numérique du lan de masse", layout="centered")
+st.set_page_config(page_title="Analyse numérique du plan de masse", layout="centered")
 
 # Logo depuis une URL (exemple : logo Paris-Saclay)
 logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-saclay-logo-012-scaled.jpg"
@@ -21,7 +21,7 @@ logo_url = "https://epa-paris-saclay.fr/wp-content/uploads/2021/12/00_paris-sacl
 #with st.sidebar:
 #    st.image(logo_url, width=120)  # Affiche le logo dans la sidebar
 
-st.title("🖼️ Analyse d'image - Plan de masses")
+st.title("🖼️ Analyse d'images - Plan de masse")
 
 st.write("Outil réalisé par [Mathias Pisch](https://www.linkedin.com/in/mathiaspisch/)")
 st.image(logo_url, width=200)
